@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f3a6fff7e1fb443199076feac93e6f34" Name="Diagram1">
+        <EntityTypeShape EntityType="DostavkaModel.Analytics" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DostavkaModel.Delivery_Routes" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DostavkaModel.Driver_Status" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DostavkaModel.Notifications" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DostavkaModel.Order_Items" Width="1.5" PointX="5.25" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DostavkaModel.Orders" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DostavkaModel.Payment_Transactions" Width="1.5" PointX="5.25" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DostavkaModel.Products" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DostavkaModel.Reviews" Width="1.5" PointX="8.25" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DostavkaModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DostavkaModel.User_Preferences" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DostavkaModel.Users" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <AssociationConnector Association="DostavkaModel.FK_Delivery_Routes_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Delivery_Routes_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Driver_Status_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Notifications_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Notifications_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Order_Items_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Order_Items_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Orders_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Orders_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Payment_Transactions_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Reviews_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Reviews_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_User_Preferences_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_Reviews_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DostavkaModel.FK_User_Preferences_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

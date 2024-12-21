@@ -1,0 +1,605 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище TaxiModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DriverBonuses">
+          <Key>
+            <PropertyRef Name="bonus_id" />
+          </Key>
+          <Property Name="bonus_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="driver_id" Type="int" />
+          <Property Name="amount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="reason" Type="varchar" MaxLength="255" />
+          <Property Name="bonus_date" Type="date" />
+        </EntityType>
+        <EntityType Name="Drivers">
+          <Key>
+            <PropertyRef Name="driver_id" />
+          </Key>
+          <Property Name="driver_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="15" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="license_number" Type="varchar" MaxLength="20" />
+          <Property Name="hire_date" Type="date" />
+          <Property Name="contract_status" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="feedback_id" />
+          </Key>
+          <Property Name="feedback_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" />
+          <Property Name="driver_id" Type="int" />
+          <Property Name="rating" Type="int" />
+          <Property Name="punctuality_rating" Type="int" />
+          <Property Name="politeness_rating" Type="int" />
+          <Property Name="cleanliness_rating" Type="int" />
+          <Property Name="comment" Type="text" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customer_name" Type="varchar" MaxLength="100" />
+          <Property Name="customer_phone" Type="varchar" MaxLength="15" />
+          <Property Name="pickup_location" Type="varchar" MaxLength="255" />
+          <Property Name="dropoff_location" Type="varchar" MaxLength="255" />
+          <Property Name="order_date" Type="date" />
+          <Property Name="assigned_driver_id" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderTracking">
+          <Key>
+            <PropertyRef Name="tracking_id" />
+          </Key>
+          <Property Name="tracking_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" />
+          <Property Name="location" Type="varchar" MaxLength="255" />
+          <Property Name="status" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="password_hash" Type="varchar" MaxLength="255" />
+          <Property Name="role" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="VehicleAssignments">
+          <Key>
+            <PropertyRef Name="assignment_id" />
+          </Key>
+          <Property Name="assignment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vehicle_id" Type="int" />
+          <Property Name="driver_id" Type="int" />
+          <Property Name="assigned_date" Type="date" />
+          <Property Name="returned_date" Type="date" />
+        </EntityType>
+        <EntityType Name="Vehicles">
+          <Key>
+            <PropertyRef Name="vehicle_id" />
+          </Key>
+          <Property Name="vehicle_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="model" Type="varchar" MaxLength="50" />
+          <Property Name="year" Type="int" />
+          <Property Name="mileage" Type="int" />
+          <Property Name="status" Type="varchar" MaxLength="20" />
+          <Property Name="last_service_date" Type="date" />
+          <Property Name="next_service_date" Type="date" />
+        </EntityType>
+        <Association Name="FK__DriverBon__drive__3B75D760">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="0..1" />
+          <End Role="DriverBonuses" Type="Self.DriverBonuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="driver_id" />
+            </Principal>
+            <Dependent Role="DriverBonuses">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedback__driver__34C8D9D1">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="0..1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="driver_id" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedback__order___33D4B598">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__assigned__2E1BDC42">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="driver_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="assigned_driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderTrac__order__30F848ED">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="OrderTracking" Type="Self.OrderTracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="OrderTracking">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VehicleAs__drive__2B3F6F97">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="0..1" />
+          <End Role="VehicleAssignments" Type="Self.VehicleAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="driver_id" />
+            </Principal>
+            <Dependent Role="VehicleAssignments">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VehicleAs__vehic__2A4B4B5E">
+          <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="0..1" />
+          <End Role="VehicleAssignments" Type="Self.VehicleAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicles">
+              <PropertyRef Name="vehicle_id" />
+            </Principal>
+            <Dependent Role="VehicleAssignments">
+              <PropertyRef Name="vehicle_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище TaxiModelContainer">
+          <EntitySet Name="DriverBonuses" EntityType="Self.DriverBonuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTracking" EntityType="Self.OrderTracking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VehicleAssignments" EntityType="Self.VehicleAssignments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehicles" EntityType="Self.Vehicles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__DriverBon__drive__3B75D760" Association="Self.FK__DriverBon__drive__3B75D760">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="DriverBonuses" EntitySet="DriverBonuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedback__driver__34C8D9D1" Association="Self.FK__Feedback__driver__34C8D9D1">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedback__order___33D4B598" Association="Self.FK__Feedback__order___33D4B598">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__assigned__2E1BDC42" Association="Self.FK__Orders__assigned__2E1BDC42">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderTrac__order__30F848ED" Association="Self.FK__OrderTrac__order__30F848ED">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderTracking" EntitySet="OrderTracking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VehicleAs__drive__2B3F6F97" Association="Self.FK__VehicleAs__drive__2B3F6F97">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="VehicleAssignments" EntitySet="VehicleAssignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VehicleAs__vehic__2A4B4B5E" Association="Self.FK__VehicleAs__vehic__2A4B4B5E">
+            <End Role="Vehicles" EntitySet="Vehicles" />
+            <End Role="VehicleAssignments" EntitySet="VehicleAssignments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TaxiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DriverBonuses">
+          <Key>
+            <PropertyRef Name="bonus_id" />
+          </Key>
+          <Property Name="bonus_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="driver_id" Type="Int32" />
+          <Property Name="amount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="reason" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="bonus_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Drivers" Relationship="Self.FK__DriverBon__drive__3B75D760" FromRole="DriverBonuses" ToRole="Drivers" />
+        </EntityType>
+        <EntityType Name="Drivers">
+          <Key>
+            <PropertyRef Name="driver_id" />
+          </Key>
+          <Property Name="driver_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="license_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="hire_date" Type="DateTime" Precision="0" />
+          <Property Name="contract_status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DriverBonuses" Relationship="Self.FK__DriverBon__drive__3B75D760" FromRole="Drivers" ToRole="DriverBonuses" />
+          <NavigationProperty Name="Feedback" Relationship="Self.FK__Feedback__driver__34C8D9D1" FromRole="Drivers" ToRole="Feedback" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__assigned__2E1BDC42" FromRole="Drivers" ToRole="Orders" />
+          <NavigationProperty Name="VehicleAssignments" Relationship="Self.FK__VehicleAs__drive__2B3F6F97" FromRole="Drivers" ToRole="VehicleAssignments" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="feedback_id" />
+          </Key>
+          <Property Name="feedback_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" />
+          <Property Name="driver_id" Type="Int32" />
+          <Property Name="rating" Type="Int32" />
+          <Property Name="punctuality_rating" Type="Int32" />
+          <Property Name="politeness_rating" Type="Int32" />
+          <Property Name="cleanliness_rating" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Drivers" Relationship="Self.FK__Feedback__driver__34C8D9D1" FromRole="Feedback" ToRole="Drivers" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Feedback__order___33D4B598" FromRole="Feedback" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customer_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="customer_phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="pickup_location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="dropoff_location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="order_date" Type="DateTime" Precision="0" />
+          <Property Name="assigned_driver_id" Type="Int32" />
+          <NavigationProperty Name="Drivers" Relationship="Self.FK__Orders__assigned__2E1BDC42" FromRole="Orders" ToRole="Drivers" />
+          <NavigationProperty Name="Feedback" Relationship="Self.FK__Feedback__order___33D4B598" FromRole="Orders" ToRole="Feedback" />
+          <NavigationProperty Name="OrderTracking" Relationship="Self.FK__OrderTrac__order__30F848ED" FromRole="Orders" ToRole="OrderTracking" />
+        </EntityType>
+        <EntityType Name="OrderTracking">
+          <Key>
+            <PropertyRef Name="tracking_id" />
+          </Key>
+          <Property Name="tracking_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" />
+          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__OrderTrac__order__30F848ED" FromRole="OrderTracking" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password_hash" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="role" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VehicleAssignments">
+          <Key>
+            <PropertyRef Name="assignment_id" />
+          </Key>
+          <Property Name="assignment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vehicle_id" Type="Int32" />
+          <Property Name="driver_id" Type="Int32" />
+          <Property Name="assigned_date" Type="DateTime" Precision="0" />
+          <Property Name="returned_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Drivers" Relationship="Self.FK__VehicleAs__drive__2B3F6F97" FromRole="VehicleAssignments" ToRole="Drivers" />
+          <NavigationProperty Name="Vehicles" Relationship="Self.FK__VehicleAs__vehic__2A4B4B5E" FromRole="VehicleAssignments" ToRole="Vehicles" />
+        </EntityType>
+        <EntityType Name="Vehicles">
+          <Key>
+            <PropertyRef Name="vehicle_id" />
+          </Key>
+          <Property Name="vehicle_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="mileage" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="last_service_date" Type="DateTime" Precision="0" />
+          <Property Name="next_service_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="VehicleAssignments" Relationship="Self.FK__VehicleAs__vehic__2A4B4B5E" FromRole="Vehicles" ToRole="VehicleAssignments" />
+        </EntityType>
+        <Association Name="FK__DriverBon__drive__3B75D760">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="0..1" />
+          <End Role="DriverBonuses" Type="Self.DriverBonuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="driver_id" />
+            </Principal>
+            <Dependent Role="DriverBonuses">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedback__driver__34C8D9D1">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="0..1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="driver_id" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__assigned__2E1BDC42">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="driver_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="assigned_driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VehicleAs__drive__2B3F6F97">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="0..1" />
+          <End Role="VehicleAssignments" Type="Self.VehicleAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="driver_id" />
+            </Principal>
+            <Dependent Role="VehicleAssignments">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedback__order___33D4B598">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderTrac__order__30F848ED">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="OrderTracking" Type="Self.OrderTracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="OrderTracking">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VehicleAs__vehic__2A4B4B5E">
+          <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="0..1" />
+          <End Role="VehicleAssignments" Type="Self.VehicleAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicles">
+              <PropertyRef Name="vehicle_id" />
+            </Principal>
+            <Dependent Role="VehicleAssignments">
+              <PropertyRef Name="vehicle_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TaxiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DriverBonuses" EntityType="Self.DriverBonuses" />
+          <EntitySet Name="Drivers" EntityType="Self.Drivers" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="OrderTracking" EntityType="Self.OrderTracking" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="VehicleAssignments" EntityType="Self.VehicleAssignments" />
+          <EntitySet Name="Vehicles" EntityType="Self.Vehicles" />
+          <AssociationSet Name="FK__DriverBon__drive__3B75D760" Association="Self.FK__DriverBon__drive__3B75D760">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="DriverBonuses" EntitySet="DriverBonuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedback__driver__34C8D9D1" Association="Self.FK__Feedback__driver__34C8D9D1">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__assigned__2E1BDC42" Association="Self.FK__Orders__assigned__2E1BDC42">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VehicleAs__drive__2B3F6F97" Association="Self.FK__VehicleAs__drive__2B3F6F97">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="VehicleAssignments" EntitySet="VehicleAssignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedback__order___33D4B598" Association="Self.FK__Feedback__order___33D4B598">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderTrac__order__30F848ED" Association="Self.FK__OrderTrac__order__30F848ED">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderTracking" EntitySet="OrderTracking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VehicleAs__vehic__2A4B4B5E" Association="Self.FK__VehicleAs__vehic__2A4B4B5E">
+            <End Role="Vehicles" EntitySet="Vehicles" />
+            <End Role="VehicleAssignments" EntitySet="VehicleAssignments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище TaxiModelContainer" CdmEntityContainer="TaxiEntities">
+          <EntitySetMapping Name="DriverBonuses">
+            <EntityTypeMapping TypeName="TaxiModel.DriverBonuses">
+              <MappingFragment StoreEntitySet="DriverBonuses">
+                <ScalarProperty Name="bonus_id" ColumnName="bonus_id" />
+                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="reason" ColumnName="reason" />
+                <ScalarProperty Name="bonus_date" ColumnName="bonus_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drivers">
+            <EntityTypeMapping TypeName="TaxiModel.Drivers">
+              <MappingFragment StoreEntitySet="Drivers">
+                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="license_number" ColumnName="license_number" />
+                <ScalarProperty Name="hire_date" ColumnName="hire_date" />
+                <ScalarProperty Name="contract_status" ColumnName="contract_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedback">
+            <EntityTypeMapping TypeName="TaxiModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="feedback_id" ColumnName="feedback_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="punctuality_rating" ColumnName="punctuality_rating" />
+                <ScalarProperty Name="politeness_rating" ColumnName="politeness_rating" />
+                <ScalarProperty Name="cleanliness_rating" ColumnName="cleanliness_rating" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="TaxiModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="customer_name" ColumnName="customer_name" />
+                <ScalarProperty Name="customer_phone" ColumnName="customer_phone" />
+                <ScalarProperty Name="pickup_location" ColumnName="pickup_location" />
+                <ScalarProperty Name="dropoff_location" ColumnName="dropoff_location" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="assigned_driver_id" ColumnName="assigned_driver_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderTracking">
+            <EntityTypeMapping TypeName="TaxiModel.OrderTracking">
+              <MappingFragment StoreEntitySet="OrderTracking">
+                <ScalarProperty Name="tracking_id" ColumnName="tracking_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TaxiModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TaxiModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehicleAssignments">
+            <EntityTypeMapping TypeName="TaxiModel.VehicleAssignments">
+              <MappingFragment StoreEntitySet="VehicleAssignments">
+                <ScalarProperty Name="assignment_id" ColumnName="assignment_id" />
+                <ScalarProperty Name="vehicle_id" ColumnName="vehicle_id" />
+                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
+                <ScalarProperty Name="assigned_date" ColumnName="assigned_date" />
+                <ScalarProperty Name="returned_date" ColumnName="returned_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehicles">
+            <EntityTypeMapping TypeName="TaxiModel.Vehicles">
+              <MappingFragment StoreEntitySet="Vehicles">
+                <ScalarProperty Name="vehicle_id" ColumnName="vehicle_id" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="mileage" ColumnName="mileage" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="last_service_date" ColumnName="last_service_date" />
+                <ScalarProperty Name="next_service_date" ColumnName="next_service_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

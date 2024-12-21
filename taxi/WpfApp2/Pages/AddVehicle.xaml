@@ -1,0 +1,20 @@
+﻿<Page x:Class="WpfApp2.Pages.AddVehicle"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp2.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddVehicle">
+
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBlock Text="Добавить новый товар" FontSize="24" HorizontalAlignment="Center" Margin="0,10" />
+            <TextBox x:Name="ModelTextBox" Text="Название" Margin="0,10" Width="250"/>
+            <TextBox x:Name="YearTextBox" Text="Срок" Margin="0,10" Width="250"/>
+            <TextBox x:Name="MileageTextBox" Text="Цена" Margin="0,10" Width="250"/>
+            <Button Content="Добавить" Click="AddVehicleButton_Click" HorizontalAlignment="Center" Margin="10"/>
+        </StackPanel>
+    </Grid>
+</Page>

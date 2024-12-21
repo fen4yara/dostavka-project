@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="036192d7035643e79dc0295bceb05bfb" Name="Diagram1" ZoomLevel="94">
+        <EntityTypeShape EntityType="TaxiModel.DriverBonuses" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaxiModel.Drivers" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaxiModel.Feedback" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaxiModel.Orders" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaxiModel.OrderTracking" Width="1.5" PointX="5.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaxiModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaxiModel.Users" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaxiModel.VehicleAssignments" Width="1.5" PointX="6" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaxiModel.Vehicles" Width="1.5" PointX="3.75" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="TaxiModel.FK__DriverBon__drive__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="TaxiModel.FK__Feedback__driver__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="TaxiModel.FK__Orders__assigned__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="TaxiModel.FK__VehicleAs__drive__2B3F6F97" ManuallyRouted="false" />
+        <AssociationConnector Association="TaxiModel.FK__Feedback__order___33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="TaxiModel.FK__OrderTrac__order__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="TaxiModel.FK__VehicleAs__vehic__2A4B4B5E" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

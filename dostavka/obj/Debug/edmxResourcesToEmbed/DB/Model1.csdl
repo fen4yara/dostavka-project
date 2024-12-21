@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DostavkaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Analytics">
+    <Key>
+      <PropertyRef Name="ID_analytic" />
+    </Key>
+    <Property Name="ID_analytic" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Metric_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Value" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="Delivery_Routes">
+    <Key>
+      <PropertyRef Name="ID_Route" />
+    </Key>
+    <Property Name="ID_Route" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Order" Type="Int32" />
+    <Property Name="ID_Driver" Type="Int32" />
+    <Property Name="Route_data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Delivery_Routes_Orders" FromRole="Delivery_Routes" ToRole="Orders" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Delivery_Routes_Users" FromRole="Delivery_Routes" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Driver_Status">
+    <Key>
+      <PropertyRef Name="ID_status" />
+    </Key>
+    <Property Name="ID_status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Driver" Type="Int32" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Last_update" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Driver_Status_Users" FromRole="Driver_Status" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Notifications">
+    <Key>
+      <PropertyRef Name="ID_Notification" />
+    </Key>
+    <Property Name="ID_Notification" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_User" Type="Int32" />
+    <Property Name="ID_Order" Type="Int32" />
+    <Property Name="Message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Time_of_sending" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Notifications_Orders" FromRole="Notifications" ToRole="Orders" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Notifications_Users" FromRole="Notifications" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Order_Items">
+    <Key>
+      <PropertyRef Name="ID_item" />
+    </Key>
+    <Property Name="ID_item" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Order" Type="Int32" />
+    <Property Name="ID_Product" Type="Int32" />
+    <Property Name="Quantity_product" Type="Int32" />
+    <Property Name="Price" Type="Int32" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Items_Orders" FromRole="Order_Items" ToRole="Orders" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_Order_Items_Products" FromRole="Order_Items" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="ID_Order" />
+    </Key>
+    <Property Name="ID_Order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Customer" Type="Int32" />
+    <Property Name="ID_Driver" Type="Int32" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Total_price" Type="Int32" />
+    <Property Name="Payment_method" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Delivery_address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Delivery_time" Type="DateTime" Precision="3" />
+    <Property Name="Created_order" Type="DateTime" Precision="3" />
+    <Property Name="Updated_order" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Delivery_Routes" Relationship="Self.FK_Delivery_Routes_Orders" FromRole="Orders" ToRole="Delivery_Routes" />
+    <NavigationProperty Name="Notifications" Relationship="Self.FK_Notifications_Orders" FromRole="Orders" ToRole="Notifications" />
+    <NavigationProperty Name="Order_Items" Relationship="Self.FK_Order_Items_Orders" FromRole="Orders" ToRole="Order_Items" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
+    <NavigationProperty Name="Users1" Relationship="Self.FK_Orders_Users1" FromRole="Orders" ToRole="Users" />
+    <NavigationProperty Name="Payment_Transactions" Relationship="Self.FK_Payment_Transactions_Orders" FromRole="Orders" ToRole="Payment_Transactions" />
+    <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Orders" FromRole="Orders" ToRole="Reviews" />
+  </EntityType>
+  <EntityType Name="Payment_Transactions">
+    <Key>
+      <PropertyRef Name="ID_Transaction" />
+    </Key>
+    <Property Name="ID_Transaction" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Order" Type="Int32" />
+    <Property Name="Amount" Type="Int32" />
+    <Property Name="Payment_method" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Created" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Payment_Transactions_Orders" FromRole="Payment_Transactions" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ID_Product" />
+    </Key>
+    <Property Name="ID_Product" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Quantity_Sklad" Type="Int32" />
+    <NavigationProperty Name="Order_Items" Relationship="Self.FK_Order_Items_Products" FromRole="Products" ToRole="Order_Items" />
+    <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Products" FromRole="Products" ToRole="Reviews" />
+    <NavigationProperty Name="User_Preferences" Relationship="Self.FK_User_Preferences_Products" FromRole="Products" ToRole="User_Preferences" />
+  </EntityType>
+  <EntityType Name="Reviews">
+    <Key>
+      <PropertyRef Name="ID_Review" />
+    </Key>
+    <Property Name="ID_Review" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Customer" Type="Int32" />
+    <Property Name="ID_Product" Type="Int32" />
+    <Property Name="ID_Order" Type="Int32" />
+    <Property Name="Rating" Type="Int32" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Created_Review" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Reviews_Orders" FromRole="Reviews" ToRole="Orders" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_Reviews_Products" FromRole="Reviews" ToRole="Products" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Reviews_Users" FromRole="Reviews" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User_Preferences">
+    <Key>
+      <PropertyRef Name="ID_Preference" />
+    </Key>
+    <Property Name="ID_Preference" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Customer" Type="Int32" />
+    <Property Name="ID_preference_Product" Type="Int32" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_User_Preferences_Products" FromRole="User_Preferences" ToRole="Products" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_User_Preferences_Users" FromRole="User_Preferences" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID_User" />
+    </Key>
+    <Property Name="ID_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="Int32" />
+    <Property Name="Hire_date" Type="DateTime" Precision="0" />
+    <Property Name="Adress_customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password_hash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Delivery_Routes" Relationship="Self.FK_Delivery_Routes_Users" FromRole="Users" ToRole="Delivery_Routes" />
+    <NavigationProperty Name="Driver_Status" Relationship="Self.FK_Driver_Status_Users" FromRole="Users" ToRole="Driver_Status" />
+    <NavigationProperty Name="Notifications" Relationship="Self.FK_Notifications_Users" FromRole="Users" ToRole="Notifications" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
+    <NavigationProperty Name="Orders1" Relationship="Self.FK_Orders_Users1" FromRole="Users" ToRole="Orders" />
+    <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
+    <NavigationProperty Name="User_Preferences" Relationship="Self.FK_User_Preferences_Users" FromRole="Users" ToRole="User_Preferences" />
+  </EntityType>
+  <Association Name="FK_Delivery_Routes_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+    <End Role="Delivery_Routes" Type="Self.Delivery_Routes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="ID_Order" />
+      </Principal>
+      <Dependent Role="Delivery_Routes">
+        <PropertyRef Name="ID_Order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Delivery_Routes_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Delivery_Routes" Type="Self.Delivery_Routes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Delivery_Routes">
+        <PropertyRef Name="ID_Driver" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Driver_Status_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Driver_Status" Type="Self.Driver_Status" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Driver_Status">
+        <PropertyRef Name="ID_Driver" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Notifications_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+    <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="ID_Order" />
+      </Principal>
+      <Dependent Role="Notifications">
+        <PropertyRef Name="ID_Order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Notifications_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Notifications">
+        <PropertyRef Name="ID_User" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Items_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+    <End Role="Order_Items" Type="Self.Order_Items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="ID_Order" />
+      </Principal>
+      <Dependent Role="Order_Items">
+        <PropertyRef Name="ID_Order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Items_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Order_Items" Type="Self.Order_Items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ID_Product" />
+      </Principal>
+      <Dependent Role="Order_Items">
+        <PropertyRef Name="ID_Product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="ID_Customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Users1">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="ID_Driver" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_Transactions_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+    <End Role="Payment_Transactions" Type="Self.Payment_Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="ID_Order" />
+      </Principal>
+      <Dependent Role="Payment_Transactions">
+        <PropertyRef Name="ID_Order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviews_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+    <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="ID_Order" />
+      </Principal>
+      <Dependent Role="Reviews">
+        <PropertyRef Name="ID_Order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviews_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ID_Product" />
+      </Principal>
+      <Dependent Role="Reviews">
+        <PropertyRef Name="ID_Product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Preferences_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="User_Preferences" Type="Self.User_Preferences" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ID_Product" />
+      </Principal>
+      <Dependent Role="User_Preferences">
+        <PropertyRef Name="ID_preference_Product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviews_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="Reviews">
+        <PropertyRef Name="ID_Customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Preferences_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="User_Preferences" Type="Self.User_Preferences" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID_User" />
+      </Principal>
+      <Dependent Role="User_Preferences">
+        <PropertyRef Name="ID_Customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DostavkaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Analytics" EntityType="Self.Analytics" />
+    <EntitySet Name="Delivery_Routes" EntityType="Self.Delivery_Routes" />
+    <EntitySet Name="Driver_Status" EntityType="Self.Driver_Status" />
+    <EntitySet Name="Notifications" EntityType="Self.Notifications" />
+    <EntitySet Name="Order_Items" EntityType="Self.Order_Items" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" />
+    <EntitySet Name="Payment_Transactions" EntityType="Self.Payment_Transactions" />
+    <EntitySet Name="Products" EntityType="Self.Products" />
+    <EntitySet Name="Reviews" EntityType="Self.Reviews" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="User_Preferences" EntityType="Self.User_Preferences" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK_Delivery_Routes_Orders" Association="Self.FK_Delivery_Routes_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Delivery_Routes" EntitySet="Delivery_Routes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Delivery_Routes_Users" Association="Self.FK_Delivery_Routes_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Delivery_Routes" EntitySet="Delivery_Routes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Driver_Status_Users" Association="Self.FK_Driver_Status_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Driver_Status" EntitySet="Driver_Status" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Notifications_Orders" Association="Self.FK_Notifications_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Notifications" EntitySet="Notifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Notifications_Users" Association="Self.FK_Notifications_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Notifications" EntitySet="Notifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Items_Orders" Association="Self.FK_Order_Items_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Order_Items" EntitySet="Order_Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Items_Products" Association="Self.FK_Order_Items_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Order_Items" EntitySet="Order_Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Users1" Association="Self.FK_Orders_Users1">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_Transactions_Orders" Association="Self.FK_Payment_Transactions_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Payment_Transactions" EntitySet="Payment_Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviews_Orders" Association="Self.FK_Reviews_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Reviews" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviews_Products" Association="Self.FK_Reviews_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Reviews" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Preferences_Products" Association="Self.FK_User_Preferences_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="User_Preferences" EntitySet="User_Preferences" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviews_Users" Association="Self.FK_Reviews_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Reviews" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Preferences_Users" Association="Self.FK_User_Preferences_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="User_Preferences" EntitySet="User_Preferences" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
